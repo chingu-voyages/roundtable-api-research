@@ -1,4 +1,0 @@
-# Display a single commit. In this case the first one in the JSON
-.[1],
-# Now display all login names for the various authors 
-.[]."author"."login"

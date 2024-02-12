@@ -1,0 +1,6 @@
+# Display the JSON response
+.,
+# Display all PR names for this commit
+.[]."number",
+.[]."title",
+.[]."state"
