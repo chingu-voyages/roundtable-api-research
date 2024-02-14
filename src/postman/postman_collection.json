@@ -1,13 +1,14 @@
 {
 	"info": {
-		"_postman_id": "84ef71ea-0061-47c6-81b7-823be11488ac",
-		"name": "GitHub GraphQL API Testing",
+		"_postman_id": "4ed72581-9cfe-4766-b00c-99c635467f4a",
+		"name": "Roundtable - API Research & Testing Tools",
+		"description": "This collection has been created to help demonstrate how to use Postman to test an API (in this case the GitHub REST API) and research how to use it before writing any code.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "14555763"
 	},
 	"item": [
 		{
-			"name": "Get Template Repo",
+			"name": "Get all commits for a repo",
 			"request": {
 				"method": "GET",
 				"header": [],
