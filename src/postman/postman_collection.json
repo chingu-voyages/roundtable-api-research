@@ -8,6 +8,89 @@
 	},
 	"item": [
 		{
+			"name": "List repositories in an organization",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `",
+							"<style type=\"text/css\">",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}",
+							"    .tftable tr {background-color:#ffffff;}",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}",
+							"    .tftable tr:hover {background-color:#e0ffff;}",
+							"</style>",
+							"",
+							"<table class=\"tftable\" border=\"1\">",
+							"    <tr>",
+							"        <th>ID</th>",
+							"        <th>Name</th>",
+							"        <th>Private</th>",
+							"        <th>Fork</th>",
+							"        <th>Owner</th>",
+							"        <th>URL</th>",
+							"        <th>Description</th>",
+							"        <th>Created At</th>",
+							"        <th>Updated At</th>",
+							"        <th>Language</th>",
+							"        <th>Size</th>",
+							"        <th>Stargazers Count</th>",
+							"        <th>Watchers Count</th>",
+							"    </tr>",
+							"    ",
+							"    {{#each response}}",
+							"        <tr>",
+							"            <td>{{id}}</td>",
+							"            <td>{{name}}</td>",
+							"            <td>{{private}}</td>",
+							"            <td>{{fork}}</td>",
+							"            <td>{{owner.login}}</td>",
+							"            <td>{{html_url}}</td>",
+							"            <td>{{description}}</td>",
+							"            <td>{{created_at}}</td>",
+							"            <td>{{updated_at}}</td>",
+							"            <td>{{language}}</td>",
+							"            <td>{{size}}</td>",
+							"            <td>{{stargazers_count}}</td>",
+							"            <td>{{watchers_count}}</td>",
+							"        </tr>",
+							"    {{/each}}",
+							"</table>",
+							"`;",
+							"",
+							"function constructVisualizerPayload() {",
+							"    return { response: pm.response.json() }",
+							"}",
+							"",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/orgs/chingu-voyages/repos",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"orgs",
+						"chingu-voyages",
+						"repos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get all commits for a repo",
 			"request": {
 				"method": "GET",
@@ -51,9 +134,64 @@
 						"055537b28cb892a7f7cb94ea5c0f7c5b13d5842a",
 						"pulls"
 					]
+				},
+				"description": "This request retrieves all commits for a specific commit. We'll use this to monitor the contributors to our project repo and as the basis for awarding badges."
+			},
+			"response": []
+		},
+		{
+			"name": "Get teams and repos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "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",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query($login: String!, $after: String) {\n    organization(login: $login) {\n      id\n      login\n      name\n      teams(first: 100, after: $after) {\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n        edges {\n          cursor\n          node {\n            id\n            name\n            members(first: 100) {\n              pageInfo {\n                endCursor\n                hasNextPage\n              }\n              edges {\n                cursor\n                node {\n                  id\n                  login\n                  email\n                  name\n                }\n              }\n            }\n            repositories(first: 100) {\n              pageInfo {\n                endCursor\n                hasNextPage\n              }\n              edges {\n                cursor\n                node {\n                  id\n                  name\n                  url\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }",
+						"variables": "{\n    \"login\": \"chingu-voyages\",\n    \"after\": null\n}"
+					}
+				},
+				"url": {
+					"raw": "https://api.github.com/graphql",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"graphql"
+					]
 				}
 			},
 			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "default"
 		}
 	]
 }

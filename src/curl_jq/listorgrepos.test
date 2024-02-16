@@ -1,0 +1,4 @@
+# Display a single commit. In this case the first one in the JSON response
+.[1],
+# Display all repos names 
+.[]."author"."login"
