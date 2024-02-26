@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4ed72581-9cfe-4766-b00c-99c635467f4a",
+		"_postman_id": "8137b402-2a9f-4ea5-90c4-2bb61c30f220",
 		"name": "Roundtable - API Research & Testing Tools",
 		"description": "This collection has been created to help demonstrate how to use Postman to test an API (in this case the GitHub REST API) and research how to use it before writing any code.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -147,7 +147,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]

@@ -1,0 +1,17 @@
+# jq Commands
+
+# Format & display an entire JSON file
+cat src/curl_jq/commit.json | jq '.[]'
+
+# List the commit authors of the first commit
+cat src/curl_jq/commit.json | jq '.[1].author'
+
+# List the first commit authors login name &  avatar URL
+cat src/curl_jq/commit.json | jq '.[1].author | .login,.avatar_url'
+cat src/curl_jq/commit.json | jq '.[1].author | {login, avatar_url}'
+
+# List the element whose key has a specific value
+cat src/curl_jq/commit.json | jq '.[] | select(.author.login == "mpark4656")'
+
+# List only certain attributes for an element whose key has a specific value
+cat src/curl_jq/commit.json | jq '.[] | select(.author.login == "mpark4656") | .author | .login,.avatar_url'
